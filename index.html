@@ -1,0 +1,234 @@
+<!--
+////////////////////////////////////////////////////////////////////////
+//
+// Module           : Main Html - Index File
+// Author           : Murlidhar Fichadia
+// Date             : 27/10/16
+// Function of code :
+//  Loads D3 library, CSS style, JS files for Charts 
+//  Loads Data (Grant, Topic, UK) from different sources
+//  Does little bit of processing of data
+//  Renders (Calls initialize method for Charts)
+//
+//  Dependencies
+//  d3.min.js (v3)
+//    
+//  processMap.js
+//  processTree.js
+//  processBar.js
+//  processPack.js
+//  processPie.js
+//  processSun.js
+//
+//  bar_renderer.js
+//  pie_renderer.js
+//  map_renderer.js
+//  tree_renderer.js
+//  sun_renderer.js
+//
+//  pack_renderer.js
+//  grantAndTopicDataHelperFunctions.js
+//  findAllTopicsOfEachGroup.js
+//  agglomerativeClustering.js
+//  wrapTextSvg.js
+//  topojson.v1.min.js
+//  style.css
+//
+//  % of code written by Me                : 100%
+//  % of code taken from lab examples      : 00%
+//  % of code taken from bostock's examples: 00%
+//
+///////////////////////////////////////////////////////////////////////
+-->
+
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard - EPSRC Research Grant Data</title>
+    
+    <!-- D3 Library -->
+    <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script> 
+    
+    <!--JS topojson file for maps -->
+    <script src="js/topojson.v1.min.js"></script>
+
+    <!--Process Chart's does manipulation of data, 
+    initialization of charts and methods for interactions(Click, Hover) -->
+    <script src="js/processBar.js"></script>
+    <script src="js/processPie.js"></script>
+    <script src="js/processTree.js"></script>
+    <script src="js/processMap.js"></script>
+    <script src="js/processPack.js"></script>
+    <script src="js/processSun.js"></script>
+
+    <!-- JS Class Files - for bar, pie, map, tree, pack and sunburst renderer -->
+    <script src="js/bar_renderer.js"></script>
+    <script src="js/pie_renderer.js"></script>
+    <script src="js/map_renderer.js"></script>
+    <script src="js/tree_renderer.js"></script>
+    <script src="js/pack_renderer.js"></script>
+    <script src="js/sun_renderer.js"></script>
+
+    <!-- JS Files for pack layout -->
+    <script src="js/wrapTextSvg.js"></script>
+    <script type="text/javascript" src="js/agglomerativeClustering.js"></script>
+    <script type="text/javascript" src="js/grantAndTopicDataHelperFunctions.js"></script>
+    <script type="text/javascript" src="js/findAllTopicsOfEachGroup.js"></script>
+
+    <!-- Styles-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div id="header">
+        <div class="container">Dashboard - EPSRC Research Grant Data</div>
+    </div>
+
+    <div class="container">
+        <div class="left-content1">
+            <div class="bartitle">Grants by Organization</div>
+            <div id="barChart" class="div2"></div>
+            <div class="pietitle">UK Organisation - All Grants</div>
+            <div id="pieChart" class="div1">
+            <div class="position d1" id="uniTitle">Data Loading...Please Wait</div>
+            <div class="position d3">Grant Detail</div>
+            <div class="position d4">Title: <span id="grantTitle">-</span></div>
+            <div class="position d5">Grant Value: <span id="grantValue">-</span></div>
+            <div class="position d6">Research Area: <span id="rArea">-</span></div>
+            <div class="position d7">Principal Investigator: <span id="pInvestigator">-</span></div>
+            </div>
+        </div>
+        
+        <div class="right-content1">
+            <div class="maptitle">UK - Organisations</div>
+            <div id="mapChart" class="div4"></div>
+        </div>
+        <div class="left-content2">
+            <div class="packtitle">30 Topics - Word Cluster</div>
+            <div id="packChart" class="div5"></div>
+        </div>
+        <div class="right-content2">    
+            <div class="treetitle">UK - Countries / City / Organisations</div>
+            <div id="treeChart" class="div3"></div>
+        </div>
+        <div class="full-width">
+            <div class="suntitle">Research Area - SunBurst</div>
+            <div id="sunChart" class="div6"></div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+
+<script type="text/javascript" >
+"use strict"
+
+var GOP = [], UK = [], TOPIC = [], Grants = [], Organisations = [], Person = [], Topics = [], TopicDist = [], TopicSim = [], topicArr = [], linkageTable = [];
+
+var OrgGrants, BarOrgGrants, mapData, OrgVal, packGrants, nLeaves, pieData, treeData, hwGrants;
+
+var hierarchy = {}, augmentedSimMatrix = {};
+
+        
+var hlp = grantAndTopicDataHelperFunctions();
+var barHelper = processBar();
+var pieHelper = processPie();
+var treeHelper = processTree();
+var mapHelper = processMap();
+var packHelper = processPack();
+var sunHelper = processSun();
+
+var url1 = "/data/data.json"; //"data/data.json"
+var url2 = "/data/uk.json";
+var url3 = "/data/tModelArrayFormat.json";	//http://www.macs.hw.ac.uk/~mjc/F20DV-download/tModelArrayFormat.json
+
+d3.json(url1, function(error, GOP) {
+    if (error) return console.log("Failed: to load JSON from :" + url1);
+    d3.json(url2, function(error, UK) {
+        if (error) return console.log("Failed: to load JSON from :" + url2);
+        d3.json(url3, function(error, TOPIC) {
+            if (error) return console.log("Failed: to load JSON from :" + url3);
+            processData(GOP, UK, TOPIC);
+        });
+    });
+});
+
+
+console.log("Data loading from multiple source...Please Wait");
+
+function processData(data1, data2, data3) 
+{
+    GOP = data1;
+    UK = data2;
+    TOPIC = data3;
+
+    Organisations = GOP.organisations;
+    Grants = GOP.grants;
+    Person = GOP.persons;
+
+    TopicDist = TOPIC.topicsDocsDistrib;
+    Topics = TOPIC.topics;
+    TopicSim = TOPIC.topicsSimilarities;
+
+    mapData = {UK,Grants,Organisations};
+
+    GOP.organisations.forEach(function(organisation) 
+    {
+        organisation.grants = Grants.filter(function(grant) 
+        {
+            return grant.OrgID === organisation.OrgID;
+        });
+        organisation.nGrants = organisation.grants.length;
+    });
+
+    hwGrants = Grants.filter(function(grant) {
+        return grant.OrgID === "40";
+    });
+
+    //============= Create and render linkage table from topic similarities
+    var clusterInstance = agglomerativeClustering();
+    var linkageTable = clusterInstance.makeLinkageTable(TOPIC.topicsSimilarities);
+    var groups = packHelper.clusterIntoGroups(6, linkageTable);
+    hierarchy = findAllTopicsOfEachGroupAndCreateHierarchy(groups, linkageTable)
+    
+    //===================Render====================================
+    
+    packChart.loadAndRenderDataset(hierarchy);
+    hlp.insertOrganisationsIntoGrantsTable(GOP);
+    hlp.insertPIpersonsIntoGrantsTable(GOP);
+
+    render();
+}
+
+
+//Set up renderers
+var mapChart = mapchart("#mapChart");
+var pieChart = piechart("#pieChart");
+var barChart = barchart("#barChart");
+var treeChart = treechart("#treeChart");
+var packChart = packHelper.setUpPackRenderer("#packChart");
+var sunChart = sunchart("#sunChart");
+
+function render() 
+{
+    mapChart.loadDataset(mapData).render();
+    pieHelper.initializePie();
+    barHelper.initializeBar();
+    treeHelper.initializeTree();
+    var hw = sunHelper.initializeSun(hwGrants,Grants);
+    sunChart.loadDataset(hw).render();
+}
+
+treeChart.treeClickCallback(treeHelper.treeClick);
+pieChart.pieClickCallback(pieHelper.pieClick);
+pieChart.pieHoverCallback(pieHelper.pieHoverPack);
+mapChart.mapClickCallback(mapHelper.mapClick);
+mapChart.mapHoverCallback(mapHelper.mapHover);
+mapChart.mapTreeHoverCallback(mapHelper.mapTreeHover);
+barChart.barClickCallBack(barHelper.barClick);
+    
+</script>
+    
+</body>
+</html>

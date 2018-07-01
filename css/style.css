@@ -1,0 +1,346 @@
+/*
+///////////////////////////////////////////////////////////////////////
+//
+// Module           : CSS style sheet 
+// Author           : Murlidhar Fichadia
+// Date             :
+// Function of code :
+//  Provides CSS styling for F20DV Dashboard Application
+//
+//  % of code written by Me                : 100%
+//  % of code taken from lab examples      : 00%
+//  % of code taken from bostock's examples: 00%
+//
+///////////////////////////////////////////////////////////////////////
+*/
+
+#header {
+    width: 100%;
+    background-color: #000;
+	text-align:center;
+	padding:7px 0 7px 0;
+	color:#fff;
+	font-size: 30px;
+	margin-bottom:4px;
+}
+.container {
+    width: 100%;
+    margin: auto;
+}
+
+div.position {
+    position: absolute;
+    top:120px;
+    left:50px;
+}
+
+div span {
+    color:#000;
+    font-weight: bold;
+}
+
+div.d1{
+    color:#fff;
+    font-size:30px;
+    margin-top:400px;
+}
+div.d2{
+    color:#fff;
+    margin-top:440px;
+}
+div.d3{
+    color:#fff;
+    font-size:25px;
+    margin-top:500px;
+}
+div.d4{
+    color:#fff;
+    margin-top:540px;
+}
+div.d5{
+    color:#fff;
+    margin-top:570px;
+}
+div.d6{
+    color:#fff;
+    margin-top:600px;
+}
+div.d7{
+    color:#fff;
+    margin-top:630px;
+}
+
+div.left-content1{	
+	margin-right: 0px; 
+	overflow: hidden; 
+	width: 59.7%; 
+	margin: 0 0.3% 0 0; 
+	float: left; 
+}
+
+div.pietitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #9B1B30;
+}
+
+div.div1 {
+    width: 100%;
+    float: left;
+    height: 300px;
+	margin-bottom:4px;
+    background-color: #9B1B30;
+}
+
+div.div1 svg{
+padding:15px 0 0 450px;
+}
+
+div.bartitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #28000F;
+}
+div.div2 {
+    width: 100%;
+    float: left;
+    height: 400px;
+	margin-bottom:4px;
+    background-color: #28000F;
+}
+
+div.div2 svg{
+    padding:20px 0 0 100px;
+    -moz-padding-start: 10px;
+}
+
+div.treetitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #3B1E0E;
+}
+
+div.div3 {
+    width: 100%;
+    float: left;
+    height: 662.5px;
+    background-color: #3B1E0E;
+    margin-bottom: 4px;
+}
+
+
+div.right-content1{	
+	 margin-right: 0px; 
+    overflow: hidden; 
+    width: 40%; 
+    margin: 0 0 0 0; 
+    float: left; 
+}
+
+div.left-content2{  
+    margin-right: 0px; 
+    overflow: hidden; 
+    width: 49.7%; 
+    margin: 0 0.3% 0 0; 
+    float: left; 
+}
+div.right-content2{  
+   margin-right: 0px; 
+    overflow: hidden; 
+    width: 50%; 
+    margin: 0 0 0 0; 
+    float: left; 
+}
+
+div.div4{
+    width: 100%;
+    float: left;
+    height: 726px;
+	margin-bottom:4px;
+	background-color: #004869;
+}
+
+div.div4 svg{
+    padding-top:30px;
+}
+
+div.maptitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #004869;
+}
+
+
+div.packtitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #009473;
+}
+
+div.div5{
+    width: 100%;
+    float: left;
+    height: 662.5px;
+	background-color: #009473;
+    margin-bottom: 4px;
+}
+
+div.suntitle{
+    width: 100%;
+    float: left;
+    height: 20px;
+    text-align: center;
+    color:#fff;
+    margin-bottom:2px;
+    background-color: #7E261C;
+}
+
+div.div6{
+    width: 100%;
+    float: left;
+    height: 500px;
+    background-color: #7E261C;
+    text-align: center;
+}
+
+.clear {
+        clear: both;
+        height: 0px;
+        overflow: hidden;
+}
+
+.axis path, .axis line{
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+   fill: rgb(255, 255, 255);
+}
+
+.subunit.SCT { fill: rgba(0,255,255,0.9);box-shadow: 10px 10px; }
+.subunit.WLS { fill: rgba(0,255,255,0.7); box-shadow: 10px 10px; }
+.subunit.NIR { fill: rgba(0,255,255,0.5); box-shadow: 10px 10px;}
+.subunit.ENG { fill: rgba(0,255,255,1); }
+.subunit.IRL { fill: rgba(0,255,255,0.3); }
+
+.subunit-label.SCT { fill: #000; }
+.subunit-label.WLS { fill: #000; }
+.subunit-label.NIR { fill: #fff; }
+.subunit-label.ENG { fill: #000; }
+.subunit-label.IRL { fill: #fff; }
+
+.subunit.active { fill: rgba(255,255,0,1); }
+
+
+  div.tooltip {
+    position: absolute;
+    width: 150px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    background: #fff;
+    color: #333;
+    z-index: 50;
+    font: 13px sans-serif;
+}
+
+.hidden {
+    display:none;
+}
+
+div.div3 circle {
+    fill: #ffffff;
+    fill-opacity: 1;
+    stroke: #ffffff;
+    stroke-width: 1px;
+}
+
+div.div5 circle {
+    fill: rgb(0,0,0);
+    fill-opacity: .25;
+    stroke: rgb(255,255,255);
+    stroke-width: 1px;
+}
+
+div.div5 circle.hover{
+    
+    fill: #fff !important;
+    fill-opacity: 0.5 ;
+    stroke: #fff;
+    stroke-width: 1px;
+    
+}
+
+/* Pack Chart */
+
+.leaf circle {
+    fill: #9C8AA5;
+    fill-opacity: 1;
+}
+
+.leaf tspan{
+    fill: #fff;
+    fill-opacity: 1;
+}
+        
+.level_1 {
+    font: 40px sans-serif;
+}
+
+.leaf text {
+    font: 12px sans-serif;
+    text-anchor: middle;
+}
+
+/* Tree Chart */
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  fill: #fff;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+#pieChart path.active{
+fill: #004869 !important;
+}
+
+#barChart .active{
+    fill:#004869 !important;
+}
